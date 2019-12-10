@@ -1,6 +1,25 @@
 const assert = require('assert');
 
 describe('webdriver.io page', () => {
+    const stripTemplate = a => a.replace(/<!---->/g, '');
+
+    let el;
+
+    beforeEach(async () => {
+        await browser.url('http://localhost:3000/src/index.html');
+        
+        await browser.executeAsync((done) => {
+            const tagName = 'test-el';
+            const elo = document.createElement(tagName);
+
+            document.body.appendChild(elo);
+
+            done();
+        });
+
+        el = await $('test-el');
+    });
+
     it('should have the right title', async () => {
         await browser.url('https://webdriver.io');
 
@@ -31,5 +50,16 @@ describe('webdriver.io page', () => {
         const pContent = await p.getHTML();
 
         assert.strictEqual(pContent, '<p>This is just a test!</p>');
+    });
+
+    it(`should render <test-el>`, async () => {
+        const h1 = await el.shadow$('h1');
+        const h1Content = await h1.getHTML();
+
+        assert.strictEqual(stripTemplate(h1Content), '<h1>Hello, World</h1>');
+    });
+
+    it(`should capture rendered content`, async () => {
+        await browser.saveScreenshot(`./rendered-${browser.capabilities.browserName}.snap.png`);
     });
 });
