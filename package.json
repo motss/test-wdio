@@ -4,9 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "wdio wdio.conf.js",
-    "wdio": "wdio",
-    "serve": "es-dev-server --root-dir . --port 3000 --app-index src/index.html --node-resolve --watch"
+    "test": "concurrently \"npm run serve:test\" \"npm run wdio\" --kill-others --kill-others-on-fail",
+    "wdio": "wdio wdio.conf.js",
+    "serve": "es-dev-server --root-dir . --port 3000 --app-index src/index.html --node-resolve --watch",
+    "serve:test": "es-dev-server --root-dir . --port 3000 --app-index src/index.html --node-resolve"
   },
   "keywords": [],
   "author": "",
@@ -19,13 +20,17 @@
     "@wdio/spec-reporter": "^5.16.11",
     "@wdio/sync": "^5.16.14",
     "chromedriver": "^78.0.1",
+    "concurrently": "^5.0.1",
     "es-dev-server": "^1.29.0",
+    "execa": "^3.4.0",
     "lit-html": "^1.1.2",
+    "pretty": "^2.0.0",
     "selenium-webdriver": "^4.0.0-alpha.5",
     "wdio-chromedriver-service": "^5.0.2",
     "webdriverio": "^5.16.13"
   },
   "dependencies": {
+    "app-datepicker": "^4.0.0-rc.36",
     "lit-element": "^2.2.1"
   }
 }

@@ -1,3 +1,9 @@
+// const execa = require('execa');
+
+// const devServer = execa('npm run serve:test');
+
+// devServer.stdout.pipe(process.stdout);
+
 exports.config = {
     //
     // ====================
@@ -58,7 +64,12 @@ exports.config = {
             //
             browserName: 'chrome',
             'goog:chromeOptions': {
-                args: ['--headless', '--disable-gpu', '--no-sandbox'],
+                args: [
+                    '--window-size=1920,1080',
+                    '--headless',
+                    '--disable-gpu',
+                    '--no-sandbox'
+                ],
             },
             // If outputDir is provided WebdriverIO can capture driver session logs
             // it is possible to configure which logTypes to include/exclude.
@@ -69,7 +80,10 @@ exports.config = {
             maxInstances: 5,
             browserName: 'firefox',
             'moz:firefoxOptions': {
-                args: ['--headless'],
+                args: [
+                    '--window-size=1920,1080',
+                    '--headless'
+                ],
             },
         },
         // {
@@ -121,7 +135,9 @@ exports.config = {
     // your test setup with almost no effort. Unlike plugins, they don't add new
     // commands. Instead, they hook themselves up into the test process.
     // services: ['chromedriver'],
-    services: ['selenium-standalone'],
+    services: [
+        'selenium-standalone',
+    ],
     seleniumLogs: 'logs',
     // seleniumInstallArgs: {
     //     drivers: {
@@ -173,6 +189,15 @@ exports.config = {
      * @param {Array.<Object>} capabilities list of capabilities details
      */
     // onPrepare: function (config, capabilities) {
+    //     // try {
+    //     //     await devServer;
+    //     // } catch (e) {
+    //     //     console.error(e);
+    //     //     setTimeout(() => {
+    //     //         devServer.cancel();
+    //     //         devServer.kill('SIGTERM', { forceKillAfterTimeout: 5e3 });
+    //     //     }, 1e3);
+    //     // }
     // },
     /**
      * Gets executed just before initialising the webdriver session and test framework. It allows you
@@ -251,6 +276,12 @@ exports.config = {
      * @param {Array.<String>} specs List of spec file paths that ran
      */
     // after: function (result, capabilities, specs) {
+    //     setTimeout(() => {
+    //         devServer.cancel();
+    //         devServer.kill('SIGTERM', { forceKillAfterTimeout: 5e3 });
+
+    //         console.log('ended', devServer.isCanceled, devServer.killed);
+    //     }, 1e3);
     // },
     /**
      * Gets executed right after terminating the webdriver session.
