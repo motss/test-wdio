@@ -6,7 +6,7 @@ const getCleanHTML = async (a) => {
     const h = await a.getHTML();
     
     return p(
-        h.replace(/<!---->/g, ''),
+        h.replace(/<!---->/g, '').replace(/\s?style-scope app-datepicker\s?/gi, ''),
         { ocd: true }
     );
 };

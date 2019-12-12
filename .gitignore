@@ -1,3 +1,7 @@
+# files
+*.env
+*.log
+
 # folders
 logs
 node_modules
